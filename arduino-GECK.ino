@@ -38,13 +38,25 @@ byte rowPins[ROWS] = {9, 8, 7, 6}; // пины подключенных стро
 byte colPins[COLS] = {5, 4, 3, 2}; // пины подключенных столбцов
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS ); // создаем объект клавиатуры для работы с ней
 
-//Пины
+// Пины
 #define PIN_SUCCESS 13
 
 // Настройки игры
 #define MAX_TRIES 3 // Количество попыток
 #define BLOCK_TIMEOUT 1800 // Время устройства в отключке
 Password secret = Password("11111111"); // Дефолтный пароль
+
+// Возможные состояния автомата
+enum States
+{
+  PLAY,
+  ADMIN,
+  SUCCESS,
+  BLOCK,
+};
+
+// Текущее состояние автомата
+States current;
 
 //====================================================================================================
 
@@ -84,9 +96,12 @@ void drawPasswordRequired(Password pass)
   tft.fillScreen(BLACK);
   drawHead();
   drawTextCentered("Требуется пароль", -3);
-  String input = pass.getGuess();
-  for (int i = 0; i < pass.length() - pass.guessLength(); i++) {
+  String input;
+  for (int i = 0; i < pass.guessLength(); i++) {
     input += "*";
+  }
+  for (int i = 0; i < pass.length() - pass.guessLength(); i++) {
+    input += "_";
   }
   drawTextCentered(input, 3);
 }
@@ -133,6 +148,11 @@ void setup(void)
 {
   Serial.begin(9600);
 
+  // Настраиваем пины
+  pinMode(PIN_SUCCESS, OUTPUT);
+
+  digitalWrite(PIN_SUCCESS, LOW);
+
   // Настраиваем дисплей
   uint16_t ID = tft.readID();
   if (ID == 0xD3) ID = 0x9481;
@@ -153,9 +173,24 @@ void setup(void)
 
 void loop(void)
 {
-  switch state
-  drawBlocked(123);
-  
+  secret.append('1'); secret.append('2'); secret.append('3');
+  drawPasswordRequired(secret);
+  delay(3000000);
+
+  switch (current)
+  {
+    case PLAY:
+      break;
+    case ADMIN:
+      break;
+    case SUCCESS:
+      break;
+    case BLOCK:
+      break;
+  }
+
+  char key = keypad.getKey();
+
   //  16383
 
   //  tft.setTextColor(CYAN);
