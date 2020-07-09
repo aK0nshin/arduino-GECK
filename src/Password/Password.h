@@ -15,7 +15,9 @@ public:
 	void set(String pass);
 	bool is(String pass);
 	bool append(char character);
+	char pop();
 	void reset();
+	bool enoughGuess();
 	bool evaluate();
 	size_t length();
 	size_t guessLength();

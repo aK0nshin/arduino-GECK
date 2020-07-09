@@ -27,20 +27,33 @@ bool Password::append(char character)
 	return true;
 }
 
+//removes and returns last char from the guessed password
+char Password::pop()
+{
+	int lastCharIndex = guess.length() - 1;
+	if (lastCharIndex < 1) {
+		return '\000';
+	}
+	char c = guess.charAt(lastCharIndex);
+	guess.remove(lastCharIndex);
+	return c;
+}
+
 //reset the guessed password, one can guess again
 void Password::reset()
 {
 	guess = String("");
 }
 
+bool Password::enoughGuess()
+{
+	return guess.length() >= target.length();
+}
+
 //is the current guessed password equal to the target password?
 bool Password::evaluate()
 {
-	if (target == guess)
-	{
-		return true;
-	}
-	return false;
+	return target == guess;
 }
 
 size_t Password::length()
