@@ -7,9 +7,7 @@ String new_pass = "";
 
 void run_machine()
 {
-  if (enter_admin_input()) {
-    return;
-  }
+  enter_admin_input();
   switch (curS)
   {
     case INITIAL:
@@ -26,6 +24,7 @@ void run_machine()
       break;
     case PASSWORD_REQUIRED:
       if (firstTime()) {
+        digitalWrite(PIN_GARDEN_CREATED, HIGH);
         secret.reset();
         drawPasswordRequired(&secret);
       }
@@ -138,6 +137,7 @@ void run_machine()
       state_change_input();
       break;
   }
+  Serial.println("Current state: " + String(curS));
 }
 
 bool firstTime() {

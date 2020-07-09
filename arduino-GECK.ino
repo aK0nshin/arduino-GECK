@@ -37,8 +37,8 @@ byte colPins[COLS] = {5, 4, 3, 2}; // пины подключенных стол
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS ); // создаем объект клавиатуры для работы с ней
 
 // Пины
-#define PIN_GARDEN_CREATED 22
-#define PIN_ENTER_ADMIN 24
+#define PIN_GARDEN_CREATED 20
+#define PIN_ENTER_ADMIN 21
 SdFatSoftSpi<12, 11, 13> SD;   // Создаём и цепляем SD к пинам
 #define SD_CS 10               // SD card pin on your shield
 
